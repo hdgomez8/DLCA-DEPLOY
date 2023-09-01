@@ -8,6 +8,8 @@ import Home from "./views/Home/Home";
 import Footer from "./components/Footer/Footer";
 import Product from "./components/Product/Product";
 import Ofertas from "./views/Ofertas/Ofertas";
+import axios from "axios";
+axios.defaults.baseURL="http://localhost:3001/";
 
 const App = () => {
 
