@@ -9,7 +9,7 @@ import Footer from "./components/Footer/Footer";
 import Product from "./components/Product/Product";
 import Ofertas from "./views/Ofertas/Ofertas";
 import axios from "axios";
-axios.defaults.baseURL="http://localhost:3001/";
+axios.defaults.baseURL="https://dlca-deploy-production.up.railway.app/";
 
 const App = () => {
 
