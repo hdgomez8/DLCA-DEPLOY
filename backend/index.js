@@ -20,12 +20,12 @@
 require("dotenv").config(); // para leer las variables de entorno 
 const server = require('./src/server.js');
 const { conn } = require('./src/db.js');
-const {PORT} = process.env;
+const port = process.env.PORT || 3001;
 //
 // antes de la presentacion ponerlo en false 
 //para que no se borre al BD force: false
-conn.sync({ force: true }).then(() => {
-  server.listen(PORT, () => {
-    console.log('%s listening at', PORT); 
+conn.sync({ force: false }).then(() => {
+  server.listen(3001, () => {
+    console.log('%s listening at 3001'); 
   });
 });

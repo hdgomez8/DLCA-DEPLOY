@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST,DB_PORT, DB_NAME } = process.env;
 const { Sequelize } = require('sequelize'); // para interactuar con postgresSQL
 const fs = require('fs'); //manipula sistemas de archivos
 const path = require('path');
@@ -22,7 +22,9 @@ const modelDefiners = []; // Crea un arreglo para almacenar los definidores de m
 fs.readdirSync(path.join(__dirname, '/models'))
 	.filter(
 		(file) =>
-			file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+			file.indexOf('.') !== 0 &&
+			 file !== basename &&
+			  file.slice(-3) === '.js'
 	)
 	.forEach((file) => {
 		modelDefiners.push(require(path.join(__dirname, '/models', file)));
@@ -65,8 +67,11 @@ Tags.belongsToMany(Products, {through:"tags_products"});
 Category.hasMany(Products,{ foreignKey: 'categoryId', as: 'products'});		
 Products.belongsTo(Category,{ foreignKey: 'categoryId', as: 'productCategory'});
 
-// Subcategory.hasMany(Products, {as:'products-subcategory'});	//el 'as:' crea la columna products-subcategory dentro de la primera tabla 
-// Products.belongsTo(Subcategory);
+Subcategory.hasMany(Products, {foreignKey:'subcategoryId', as: 'subcategory'});	        //el 'as:' crea la columna products-subcategory dentro de la primera tabla 
+Products.belongsTo(Subcategory,{foreignKey: 'subcategoryId', as: 'productSubcategory'});
+
+Category.hasMany(Subcategory, {foreignKey: "catSubId", as: 'subcat'})
+Subcategory.belongsTo(Category, {foreignKey: 'catSubId', as: 'catSub'})
 
 Brand.hasMany(Products, {foreignKey: 'brandsId', as: 'brands'});
 Products.belongsTo(Brand,{foreignKey: 'brandsId', as: 'productBrands'});
