@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 
-// Cambiar para el deploy
+// Cambiar para el deploy/
 // axios.defaults.baseURL = "https://LINK-PARA-DEPLOY"; 
 axios.defaults.baseURL = "http://localhost:3001";
 //const root = ReactDOM.createRoot(document.getElementById('root'));
