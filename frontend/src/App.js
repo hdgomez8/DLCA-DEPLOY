@@ -8,6 +8,9 @@ import Ofertas from "./views/Ofertas/Ofertas";
 import Form from "./views/Form/FormProduct";
 import Productos from "./views/Productos/Productos";
 
+import axios from 'axios';
+axios.defaults.baseURL = 'https://dlca-deploy-production.up.railway.app/';
+
 const App = () => {
   return (
     <Router>
