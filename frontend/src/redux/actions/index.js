@@ -7,9 +7,14 @@ export const  GET_TAGS = 'GET_TAGS';
 export const  CREATE_PRODUCT = 'CREATE_PRODUCT';
 export const  DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const  FILTER_BY_TAG = 'FILTER_BY_TAG';
-export const  FILTER_BY_BRANDS = 'FILTER_BY_TAG';
-export const  FILTER_BY_CREATED = 'FILTER_BY_TAG';
-export const  ORDER_BY_NAME = 'FILTER_BY_TAG';
+export const  FILTER_BY_BRANDS = 'FILTER_BY_BRANDS';
+export const  FILTER_BY_CREATED = 'FILTER_BY_CREATED';
+export const  ORDER_BY_NAME = 'ORDER_BY_NAME';
+export const  FILTER_BY_CATEGORY = 'FILTER_BY_CATEGORY';
+export const  GET_CATEGORIES = 'GET_CATEGORIES';
+export const  OPEN_MODAL = 'OPEN_MODAL';
+export const  LOGOUT = 'LOGOUT';
+export const  GET_SUBCATEGORIES = 'GET_SUBCATEGORIES';
 
 
 export const getAllProducts = () => async dispatch => {
@@ -24,17 +29,30 @@ export const getAllProducts = () => async dispatch => {
     }
 };
 
-export const getProductsByName = (name) => async dispatch => {
-    try {
-        const getProductsByName = await axios.get(`/products?name${name}`);
+export function getProductByName (name){
+    let alertTimeOut = null
+    return async function (dispatch){
+        try{
+            clearTimeout(alertTimeOut)
+            let {data} = await axios.get(`/products?name=${name}`)
+            let product = Array.isArray(data)? data : [data]
+            if(product.length === 0){
+                setTimeout(()=>{
+                    alertTimeOut = alert("No se encontro ningun producto con ese nombre.")
+                },0)
+                return;
+            }
             return dispatch({
                 type: GET_PRODUCTS_BYNAME,
-                payload: getProductsByName.data
-            });      
-    } catch (error) { 
-        console.error('Error Name:', error);
+                payload: data
+            })
+        }catch(error){
+            setTimeout(() =>{
+                alertTimeOut = alert("No se encontro ningun producto con ese nombre")
+            },0);
+        }
     }
-};
+}
 
 export const getProductDetail = (id) => async dispatch => {
     try {
@@ -48,9 +66,34 @@ export const getProductDetail = (id) => async dispatch => {
     }
 };
 
+export const getCategories = () => async dispatch => {
+    try { 
+        const getCateory = await axios.get('/categories');
+        return dispatch({
+            type: GET_CATEGORIES,
+            payload: getCateory.data
+        });
+    } catch (error) {
+        console.error('Error Brands:', error);
+    }
+};
+
+export const getSubCategories = () => async dispatch => {
+    try { 
+        const getSubCategory = await axios.get('/subcategoria');
+        return dispatch({
+            type: GET_SUBCATEGORIES,
+            payload: getSubCategory.data
+        });
+    } catch (error) {
+        console.error('Error Subcategorias:', error);
+    }
+};
+
 export const getBrands = () => async dispatch => {
     try { 
         const getBrand = await axios.get('/brands');
+        console.log('Brands:', getBrand);
         return dispatch({
             type: GET_BRANDS,
             payload: getBrand.data
@@ -101,6 +144,13 @@ export const createProduct = (form) => async (dispatch) => {
     }
 };
 
+export const filterByCategory = (payload) => dispatch => {
+    return dispatch({
+        type: FILTER_BY_CATEGORY,
+        payload
+    })
+};
+
 export const filterByBrand = (payload) => dispatch => {
     return dispatch({
         type: FILTER_BY_BRANDS,
@@ -120,4 +170,17 @@ export const orderByName = (payload) => dispatch => {
         type: ORDER_BY_NAME,
         payload
     })
+};
+
+export function openModal(payload) {
+	return { 
+        type: OPEN_MODAL, 
+        payload, 
+    };
+};
+
+export function logout() {
+	return {
+		type: LOGOUT,
+	};
 };
