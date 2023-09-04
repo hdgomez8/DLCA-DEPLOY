@@ -1,33 +1,29 @@
-
 import React from "react";
-import { BrowserRouter as Routes, Route } from "react-router-dom";
-import ProductDetail from './views/ProductDetail';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ProductDetail from "./views/Detail/ProductDetail";
 import Landing from "./components/Landing/Landing";
 import NavBar from "./components/NavBar/NavBar";
-import Home from "./views/Home/Home";
 import Footer from "./components/Footer/Footer";
-import Product from "./components/Product/Product";
 import Ofertas from "./views/Ofertas/Ofertas";
-import axios from "axios";
-axios.defaults.baseURL="https://dlca-deploy-production.up.railway.app/";
+import Form from "./views/Form/FormProduct";
+import Productos from "./views/Productos/Productos";
 
 const App = () => {
-
   return (
-
-    <Routes>
-      <Route path="/">
-        <Landing />
-          <Route path="/" component={NavBar}>
-          <Route path="/home" component={Home} />
-          <Route path="/product" component={<Product />} />
-          <Route path='/products/ofertas' component={<Ofertas/>}/>
-          <Route path="/product/:productId" component={ProductDetail} />
-        </Route>
-      </Route>
+    <Router>
+      <NavBar />
+      <Switch>
+        <Route path="/productos" component={Productos} />
+        <Route path="/product/:id" component={ProductDetail} />
+        <Route path="/form" component={Form} />
+        <Route exact path="/" component={Landing} />
+      </Switch>
       <Footer />
-    </Routes>
+    </Router>
   );
 };
 
 export default App;
+
+
+
