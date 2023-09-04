@@ -12,7 +12,7 @@ import { createRoot } from 'react-dom/client';
 // Cambiar para el deploy
 
 // axios.defaults.baseURL = "https://LINK-PARA-DEPLOY"; 
-axios.defaults.baseURL = "https://dlca-deploy-production.up.railway.app/";
+axios.defaults.baseURL = "https://dlca-deploy-production.up.railway.app";
 
 const root = document.getElementById('root');
 const rootElement = createRoot(root);
